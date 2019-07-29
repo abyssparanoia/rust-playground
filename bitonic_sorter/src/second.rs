@@ -1,9 +1,17 @@
 use super::SortOrder;
 
-pub fn sort<T: Ord>(x: &mut [T], order: &SortOrder) {
-    match *order {
-        SortOrder::Ascending => do_sort(x, true),
-        SortOrder::Descending => do_sort(x, false),
+pub fn sort<T: Ord>(x: &mut [T], order: &SortOrder) -> Result<(), String> {
+    if x.len().is_power_of_two() {
+        match *order {
+            SortOrder::Ascending => do_sort(x, true),
+            SortOrder::Descending => do_sort(x, false),
+        };
+        Ok(())
+    } else {
+        Err(format!(
+            "The length of x is not a power of two. (x.len(): {})",
+            x.len()
+        ))
     }
 }
 
@@ -83,5 +91,11 @@ mod tests {
                 "with"
             ]
         );
+    }
+
+    #[test]
+    fn sort_to_fail() {
+        let mut x = vec![10, 30, 11];
+        assert!(sort(&mut x, &Ascending).is_err());
     }
 }
