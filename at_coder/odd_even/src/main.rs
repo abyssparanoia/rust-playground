@@ -1,21 +1,22 @@
-
 use std::io::*;
 use std::str::FromStr;
 
-fn read<T:FromStr>() -> T {
+fn read<T: FromStr>() -> T {
     let stdin = stdin();
     let stdin = stdin.lock();
     let token: String = stdin
         .bytes()
         .map(|c| c.expect("failed to read char") as char)
         .skip_while(|c| c.is_whitespace())
-        .take_while(|c|!c.is_whitespace())
+        .take_while(|c| !c.is_whitespace())
         .collect();
     token.parse().ok().expect("faild to parse token")
 }
 
-
 fn main() {
-    println!("Hello, world!");
+    let a: u32 = read();
+    let b: u32 = read();
 
+    let ans = if (a * b) % 2 == 0 { "Even" } else { "Odd" };
+    println!("{}", ans);
 }
