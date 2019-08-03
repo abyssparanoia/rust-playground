@@ -14,6 +14,24 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let s:String = read();
+    let s: String = read();
     println!("{}", s.chars().filter(|&c| c == '1').count());
 }
+
+// fn main() {
+//     let s: String = read();
+
+//     let s_vec: Vec<char> = s.chars().collect();
+
+//     let mut cnt = 0;
+//     if s_vec[0] == '1' {
+//         cnt += 1;
+//     }
+//     if s_vec[1] == '1' {
+//         cnt += 1;
+//     }
+//     if s_vec[2] == '1' {
+//         cnt += 1;
+//     }
+//     println!("{}", cnt);
+// }
