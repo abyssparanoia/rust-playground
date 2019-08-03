@@ -14,5 +14,9 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    println!("Hello, world!");
+    let n = read();
+    println!(
+        "{}",
+        (0..n).map(|_| read::<u32>().trailing_zeros()).min().unwrap()
+    );
 }
