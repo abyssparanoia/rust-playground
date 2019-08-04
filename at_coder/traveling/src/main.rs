@@ -14,5 +14,17 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    println!("Hello, world!");
+    let n = read();
+    let mut v: Vec<(i32, i32, i32)> = (0..n).map(|_| (read(), read(), read())).collect();
+    v.insert(0, (0, 0, 0));
+
+    let yes = v[..].windows(2).all(|w| {
+        let (t, x, y) = w[0];
+        let (nt, nx, ny) = w[1];
+        let time = nt - t;
+        let dist = (nx - x).abs() + (ny - y).abs();
+        dist <= time && time % 2 == dist % 2
+    });
+
+    println!("{}", if yes { "Yes" } else { "No" });
 }
