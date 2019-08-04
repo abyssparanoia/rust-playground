@@ -14,5 +14,8 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    println!("Hello, world!");
+    use std::collections::BTreeSet;
+    let n = read();
+    let a: BTreeSet<u32> = (0..n).map(|_| read()).collect();
+    println!("{}", a.len())
 }
