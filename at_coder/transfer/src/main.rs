@@ -14,5 +14,13 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    println!("Hello, world!");
+    let a: i32 = read();
+    let b: i32 = read();
+    let c: i32 = read();
+
+    let mut ans: i32 = c - a + b;
+
+    ans = if ans < 0 { 0 } else { ans };
+
+    println!("{}", ans)
 }
