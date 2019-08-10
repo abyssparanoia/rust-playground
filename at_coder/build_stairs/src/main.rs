@@ -14,5 +14,15 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    println!("Hello, world!");
+    let n: i32 = read();
+
+    let h: Vec<i32> = (0..n).map(|_| read::<i32>()).collect();
+
+    let yes = h[..].windows(2).all(|w| {
+        let h_current = w[0];
+        let h_next = w[1];
+
+        h_next - h_current >= -1
+    });
+    println!("{}", if yes { "Yes" } else { "No" })
 }
