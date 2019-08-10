@@ -14,5 +14,24 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    println!("Hello, world!");
+    let s: String = read();
+    let mut array = vec![1; s.len()];
+
+    for _ in 0..10i32.pow(5) {
+        for (index, c) in s.chars().enumerate() {
+            if array[index] == 0 {
+                continue;
+            }
+
+            array[index] = array[index] - 1;
+
+            if c == 'R' {
+                array[index + 1] += 1;
+            } else {
+                array[index - 1] += 1;
+            }
+        }
+    }
+
+    println!("{:?}", array)
 }
