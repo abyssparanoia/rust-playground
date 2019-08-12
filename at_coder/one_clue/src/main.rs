@@ -14,5 +14,13 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    println!("Hello, world!");
+    let k: i32 = read();
+    let x: i32 = read();
+
+    let min = x - k + 1;
+    let max = x + k - 1;
+
+    for index in min..max + 1 {
+        print!("{} ", index)
+    }
 }
