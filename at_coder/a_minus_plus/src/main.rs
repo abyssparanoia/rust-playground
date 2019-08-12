@@ -14,5 +14,20 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    println!("Hello, world!");
+    let a: i32 = read();
+    let b: i32 = read();
+
+    let sum = a + b;
+    let sub = a - b;
+    let mul = a * b;
+
+    let ans = if sum > sub && sum > mul {
+        sum
+    } else if sub > sum && sub > mul {
+        sub
+    } else {
+        mul
+    };
+
+    println!("{}", ans)
 }
