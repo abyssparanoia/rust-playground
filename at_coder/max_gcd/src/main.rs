@@ -13,6 +13,20 @@ fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
+fn recurse<X, Y>(x: X, f: &Fn(X, &Fn(X) -> Y) -> Y) -> Y {
+    f(x, &|x: X| recurse(x, &f))
+}
+
 fn main() {
-    println!("Hello, world!");
+    let a = 21;
+    let b = 14;
+
+    let ans = recurse((a, b), &|(x, y), gcd| {
+        if y == 0 {
+            return x;
+        }
+        gcd((y, x % y))
+    });
+
+    println!("{}", ans);
 }
