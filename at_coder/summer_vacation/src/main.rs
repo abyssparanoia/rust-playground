@@ -1,7 +1,5 @@
 use std::io::*;
 use std::str::FromStr;
-use std::collections::BTreeMap;
-
 
 fn read<T: FromStr>() -> T {
     let stdin = stdin();
@@ -17,16 +15,4 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     println!("Hello, world!");
-
-    let N:i32 = read();
-
-    let v: Vec<String> = (0..N).map(|_| read()).collect();
-
-    let mut anagramMap = BTreeMap::new();
-
-    for s in &v {
-        for i in 0..s.len() {
-            
-        }
-    }
 }
