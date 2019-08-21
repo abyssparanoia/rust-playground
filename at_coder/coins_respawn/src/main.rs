@@ -13,6 +13,15 @@ fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
+struct Edge {
+    to: u32,
+    weight: u32,
+}
+
+fn build_edge(to: u32, weight: u32) -> Edge {
+    Edge { to, weight }
+}
+
 fn main() {
     println!("Hello, world!");
 }
