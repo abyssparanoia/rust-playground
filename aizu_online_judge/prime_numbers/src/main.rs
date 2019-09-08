@@ -13,6 +13,26 @@ fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
+fn is_prime_number(n: u32) -> bool {
+    let max = (n as f32).sqrt() as u32 + 1;
+
+    for i in 2..max {
+        if n % i == 0 {
+            return false;
+        }
+    }
+    return true;
+}
+
 fn main() {
-    println!("Hello, world!");
+    let n = read();
+
+    let input_array: Vec<u32> = (0..n).map(|_| read::<u32>()).collect();
+
+    let mut cnt = 0;
+    for v in input_array {
+        cnt = if is_prime_number(v) { cnt + 1 } else { cnt };
+    }
+
+    println!("{}", cnt)
 }
