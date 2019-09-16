@@ -13,7 +13,8 @@ fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
-fn bubble_sort(mut target_array: Vec<u32>, n: u32) {
+fn bubble_sort(mut target_array: Vec<u32>) {
+    let n = target_array.len();
     let mut flag = true;
 
     while flag {
@@ -25,6 +26,24 @@ fn bubble_sort(mut target_array: Vec<u32>, n: u32) {
                 target_array[(j - 1) as usize] = temp;
                 flag = true;
             }
+        }
+    }
+}
+
+fn selection_sort(mut target_array: Vec<u32>) {
+    let n = target_array.len();
+
+    for i in 0..n {
+        let mut min_j = i;
+        for j in i..n {
+            if target_array[j as usize] < target_array[min_j as usize] {
+                min_j = j
+            };
+        }
+        if min_j != i {
+            let temp = target_array[i as usize];
+            target_array[i as usize] = target_array[min_j as usize];
+            target_array[min_j as usize] = temp;
         }
     }
 }
