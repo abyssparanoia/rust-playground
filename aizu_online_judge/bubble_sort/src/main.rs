@@ -14,13 +14,12 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    println!("Hello, world!");
-
     let n: u32 = read();
 
     let mut target_array: Vec<u32> = (0..n).map(|_| read::<u32>()).collect();
 
     let mut flag = true;
+    let mut count = 0;
 
     while flag {
         flag = false;
@@ -30,6 +29,7 @@ fn main() {
                 target_array[j as usize] = target_array[(j - 1) as usize];
                 target_array[(j - 1) as usize] = temp;
                 flag = true;
+                count += 1;
             }
         }
     }
@@ -42,4 +42,5 @@ fn main() {
         }
     }
     println!("");
+    println!("{}", count);
 }
