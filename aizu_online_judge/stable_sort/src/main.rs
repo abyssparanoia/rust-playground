@@ -1,6 +1,7 @@
 use std::io::*;
 use std::str::FromStr;
 
+#[derive(Clone)]
 struct Card {
     suit: char,
     value: u32,
@@ -55,6 +56,31 @@ fn selection_sort(target_array: &mut Vec<Card>) {
     }
 }
 
+fn is_equal(a: &mut Card, b: &mut Card) -> bool {
+    a.value == b.value && a.suit == b.suit
+}
+
+fn is_stable(base_array: &mut Vec<Card>, target_array: &mut Vec<Card>) {
+    let n = target_array.len();
+
+    for i in 1..n - 1 as usize {
+        for j in i + 1..n as usize {
+            for a in 1..n - 1 as usize {
+                for b in a + 1..n as usize {
+                    if is_equal(&mut base_array[i], &mut target_array[j])
+                        && is_equal(&mut base_array[i], &mut target_array[b])
+                        && is_equal(&mut base_array[i], &mut target_array[a])
+                    {
+                        println!("Not stable");
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    println!("Stable")
+}
+
 fn display_array<T: std::fmt::Display>(target_array: &mut Vec<T>) {
     let n = target_array.len();
 
@@ -69,11 +95,9 @@ fn display_array<T: std::fmt::Display>(target_array: &mut Vec<T>) {
 }
 
 fn main() {
-    println!("Hello, world!");
-
     let n: u32 = read();
 
-    let mut target_array: Vec<Card> = (0..n)
+    let mut base_array: Vec<Card> = (0..n)
         .map(|_| read::<String>())
         .map(|input_v| Card {
             suit: input_v.chars().nth(0).unwrap(),
@@ -81,6 +105,13 @@ fn main() {
         })
         .collect();
 
-    bubble_sort(&mut target_array);
-    display_array::<Card>(&mut target_array);
+    let mut target_array1 = base_array.to_vec();
+    bubble_sort(&mut target_array1);
+    display_array::<Card>(&mut target_array1);
+    is_stable(&mut base_array, &mut target_array1);
+
+    let mut target_array2 = base_array.to_vec();
+    selection_sort(&mut target_array2);
+    display_array::<Card>(&mut target_array2);
+    is_stable(&mut base_array, &mut target_array2)
 }
