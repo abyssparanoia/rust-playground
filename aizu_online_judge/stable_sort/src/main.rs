@@ -70,9 +70,14 @@ fn main() {
 
     let mut target_array: Vec<Card> = (0..n)
         .map(|_| read::<String>())
+        // .map(|input_v| {
+        //     println!("{:?}", input_v);
+        //     println!("{}", input_v.chars().nth(1).unwrap().to_digit(10).unwrap());
+        //     input_v
+        // })
         .map(|input_v| Card {
             suit: input_v.chars().nth(0).unwrap(),
-            value: input_v.chars().nth(1).unwrap() as u32,
+            value: input_v.chars().nth(1).unwrap().to_digit(10).unwrap(),
         })
         .collect();
 
