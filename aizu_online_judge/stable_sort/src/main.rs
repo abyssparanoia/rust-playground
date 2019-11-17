@@ -1,10 +1,15 @@
 use std::io::*;
 use std::str::FromStr;
 
-#[derive(Debug)]
 struct Card {
     suit: char,
     value: u32,
+}
+
+impl std::fmt::Display for Card {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}{}", self.suit, self.value)
+    }
 }
 
 fn read<T: FromStr>() -> T {
@@ -50,14 +55,14 @@ fn selection_sort(target_array: &mut Vec<Card>) {
     }
 }
 
-fn display_array<T: std::fmt::Debug>(target_array: &mut Vec<T>) {
+fn display_array<T: std::fmt::Display>(target_array: &mut Vec<T>) {
     let n = target_array.len();
 
     for index in 0..n {
         if index != n - 1 {
-            print!("{:?}", target_array[index as usize]);
+            print!("{} ", target_array[index as usize]);
         } else {
-            print!("{:?}", target_array[index as usize]);
+            print!("{}", target_array[index as usize]);
         }
     }
     println!("");
@@ -70,11 +75,6 @@ fn main() {
 
     let mut target_array: Vec<Card> = (0..n)
         .map(|_| read::<String>())
-        // .map(|input_v| {
-        //     println!("{:?}", input_v);
-        //     println!("{}", input_v.chars().nth(1).unwrap().to_digit(10).unwrap());
-        //     input_v
-        // })
         .map(|input_v| Card {
             suit: input_v.chars().nth(0).unwrap(),
             value: input_v.chars().nth(1).unwrap().to_digit(10).unwrap(),
