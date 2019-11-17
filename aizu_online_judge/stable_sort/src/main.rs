@@ -13,6 +13,12 @@ impl std::fmt::Display for Card {
     }
 }
 
+impl PartialEq for Card {
+    fn eq(&self, other: &Self) -> bool {
+        self.suit == other.suit && self.value == other.value
+    }
+}
+
 fn read<T: FromStr>() -> T {
     let stdin = stdin();
     let stdin = stdin.lock();
@@ -56,29 +62,16 @@ fn selection_sort(target_array: &mut Vec<Card>) {
     }
 }
 
-fn is_equal(a: &mut Card, b: &mut Card) -> bool {
-    a.value == b.value && a.suit == b.suit
-}
-
-fn is_stable(base_array: &mut Vec<Card>, target_array: &mut Vec<Card>) {
+fn is_equal(base_array: &mut Vec<Card>, target_array: &mut Vec<Card>) -> bool {
     let n = target_array.len();
 
-    for i in 1..n - 1 as usize {
-        for j in i + 1..n as usize {
-            for a in 1..n - 1 as usize {
-                for b in a + 1..n as usize {
-                    if is_equal(&mut base_array[i], &mut target_array[j])
-                        && is_equal(&mut base_array[i], &mut target_array[b])
-                        && is_equal(&mut base_array[i], &mut target_array[a])
-                    {
-                        println!("Not stable");
-                        return;
-                    }
-                }
-            }
+    for i in 0..n as usize {
+        if base_array[i] != target_array[i] {
+            return false;
         }
     }
-    println!("Stable")
+
+    true
 }
 
 fn display_array<T: std::fmt::Display>(target_array: &mut Vec<T>) {
@@ -97,7 +90,7 @@ fn display_array<T: std::fmt::Display>(target_array: &mut Vec<T>) {
 fn main() {
     let n: u32 = read();
 
-    let mut base_array: Vec<Card> = (0..n)
+    let base_array: Vec<Card> = (0..n)
         .map(|_| read::<String>())
         .map(|input_v| Card {
             suit: input_v.chars().nth(0).unwrap(),
@@ -108,10 +101,14 @@ fn main() {
     let mut target_array1 = base_array.to_vec();
     bubble_sort(&mut target_array1);
     display_array::<Card>(&mut target_array1);
-    is_stable(&mut base_array, &mut target_array1);
+    println!("Stable");
 
     let mut target_array2 = base_array.to_vec();
     selection_sort(&mut target_array2);
     display_array::<Card>(&mut target_array2);
-    is_stable(&mut base_array, &mut target_array2)
+    if is_equal(&mut target_array1, &mut target_array2) {
+        println!("Stable");
+    } else {
+        println!("Not stable");
+    }
 }
