@@ -9,6 +9,19 @@ enum Token {
     RParen,   // )
 }
 
+enum Expr {
+    Number(f64),
+    PrefixExpr {
+        operator: String,
+        right: Box<Expr>,
+    },
+    InfixExpr {
+        left: Box<Expr>,
+        operator: String,
+        right: Box<Expr>,
+    },
+}
+
 struct Lexer {
     input: Vec<char>,
     position: usize,
