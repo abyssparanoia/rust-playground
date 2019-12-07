@@ -1,3 +1,5 @@
+use core::borrow::Borrow;
+
 #[derive(Debug, PartialEq, Clone)]
 enum Token {
     Number(f64),
@@ -20,6 +22,18 @@ enum Expr {
         operator: String,
         right: Box<Expr>,
     },
+}
+
+#[derive(PartialOrd, PartialEq)]
+enum Precedence {
+    // 最低
+    LOWEST,
+    // "+", "-"
+    SUM,
+    // "*", "/"
+    PRODUCT,
+    // 前置演算子
+    PREFIX,
 }
 
 struct Lexer {
@@ -99,6 +113,32 @@ impl Parser {
     fn next(&mut self) {
         self.curr = self.peek.clone();
         self.peek = self.lexer.token();
+    }
+
+    // fn parse_prefix(&mut self) -> Option<Box<Expr>> {
+    //     match self.curr.as_ref()? {
+    //         Token::Minus => self.
+    //     }
+    // }
+
+    // fn parse_minus(&mut self) -> Option<Box<Expr>> {
+    //     self.next();
+    //     let number = s
+    // }
+
+    fn parse_number(&mut self) -> Option<Box<Expr>> {
+        match self.curr.borrow() {
+            Some(Token::Number(n)) => Some(Box::new(Expr::Number(*n))),
+            _ => None,
+        }
+    }
+
+    fn token_precedence(token: &Token) -> Precedence {
+        match token {
+            Token::Plus | Token::Minus => Precedence::SUM,
+            Token::Slash | Token::Asterisk => Precedence::PRODUCT,
+            _ => Precedence::LOWEST,
+        }
     }
 }
 
