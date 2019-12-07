@@ -1,4 +1,5 @@
 use core::borrow::Borrow;
+use std::mem;
 
 #[derive(Debug, PartialEq, Clone)]
 enum Token {
@@ -115,16 +116,22 @@ impl Parser {
         self.peek = self.lexer.token();
     }
 
-    // fn parse_prefix(&mut self) -> Option<Box<Expr>> {
-    //     match self.curr.as_ref()? {
-    //         Token::Minus => self.
-    //     }
-    // }
-
-    // fn parse_minus(&mut self) -> Option<Box<Expr>> {
-    //     self.next();
-    //     let number = s
-    // }
+    fn parse_prefix(&mut self) -> Option<Box<Expr>> {
+        match self.curr.as_ref()? {
+            Token::Minus => self.parse_minus(),
+            Token::Number(_) => self.parse_number(),
+            Token::LParen => self.parse_grouped_expression(),
+            _ => None,
+        }
+    }
+    fn parse_minus(&mut self) -> Option<Box<Expr>> {
+        self.next();
+        let number = self.parse_expression(Precedence::PREFIX)?;
+        return Some(Box::new(Expr::PrefixExpr {
+            operator: "Minus".to_string(),
+            right: number,
+        }));
+    }
 
     fn parse_number(&mut self) -> Option<Box<Expr>> {
         match self.curr.borrow() {
@@ -139,6 +146,68 @@ impl Parser {
             Token::Slash | Token::Asterisk => Precedence::PRODUCT,
             _ => Precedence::LOWEST,
         }
+    }
+
+    fn parse(&mut self) -> Option<Box<Expr>> {
+        self.parse_expression(Precedence::LOWEST)
+    }
+
+    fn parse_expression(&mut self, precedence: Precedence) -> Option<Box<Expr>> {
+        let mut left = self.parse_prefix()?;
+
+        while self.peek.is_some() && precedence < self.peek_precedence() {
+            self.next();
+            left = self.parse_infix(left)?;
+        }
+
+        return Some(left);
+    }
+
+    fn parse_grouped_expression(&mut self) -> Option<Box<Expr>> {
+        self.next();
+        let expression = self.parse_expression(Precedence::LOWEST);
+        if self.is_peek(&Token::RParen) {
+            self.next();
+            return expression;
+        } else {
+            return None;
+        }
+    }
+
+    fn parse_infix(&mut self, left: Box<Expr>) -> Option<Box<Expr>> {
+        let token = self.curr.as_ref()?;
+        match token {
+            Token::Plus | Token::Minus | Token::Asterisk | Token::Slash => {
+                self.parse_infix_expression(left)
+            }
+            _ => Some(left),
+        }
+    }
+
+    pub fn parse_infix_expression(&mut self, left: Box<Expr>) -> Option<Box<Expr>> {
+        let token = self.curr.as_ref()?;
+        let operator = format!("{:?}", token);
+        let precedence = Self::token_precedence(token);
+        self.next();
+        let right = self.parse_expression(precedence)?;
+        return Some(Box::new(Expr::InfixExpr {
+            left,
+            operator,
+            right,
+        }));
+    }
+    fn is_peek(&self, token: &Token) -> bool {
+        if self.peek.is_none() {
+            return false;
+        }
+        mem::discriminant(self.peek.as_ref().unwrap()) == mem::discriminant(token)
+    }
+    fn peek_precedence(&self) -> Precedence {
+        let token = self.peek.borrow();
+        if token.is_none() {
+            return Precedence::LOWEST;
+        }
+        return Self::token_precedence(token.as_ref().unwrap());
     }
 }
 
