@@ -1,18 +1,19 @@
 use std::io::*;
 use std::str::FromStr;
 
-fn read<T: FromStr>() -> T {
-    let stdin = stdin();
-    let stdin = stdin.lock();
-    let token: String = stdin
-        .bytes()
-        .map(|c| c.expect("failed to read char") as char)
-        .skip_while(|c| c.is_whitespace())
-        .take_while(|c| !c.is_whitespace())
-        .collect();
-    token.parse().ok().expect("failed to parse token")
+fn read_line<T: FromStr>() -> Vec<T> {
+    let mut s = String::new();
+    stdin().read_line(&mut s).ok();
+    s.trim()
+        .split_whitespace()
+        .map(|e| e.parse().ok().unwrap())
+        .collect()
 }
 
 fn main() {
-    println!("Hello, world!");
+    let token_array = read_line::<char>();
+
+    for i in 0..token_array.len() {
+        println!("{}", token_array[i as usize])
+    }
 }
