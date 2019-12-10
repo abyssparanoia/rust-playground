@@ -13,7 +13,7 @@ fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
-fn insertion_sort(mut input_array: Vec<i32>, n: i32, g: i32) -> i32 {
+fn insertion_sort(input_array: &mut Vec<i32>, n: i32, g: i32) -> i32 {
     let mut cnt = 0;
 
     for i in 0..n {
@@ -32,10 +32,45 @@ fn insertion_sort(mut input_array: Vec<i32>, n: i32, g: i32) -> i32 {
     cnt
 }
 
+fn shell_sort(input_array: &mut Vec<i32>, n: i32) -> i32 {
+    let mut cnt = 0;
+
+    let mut g: Vec<i32> = vec![];
+
+    if n == 1 {
+        g.push(1)
+    } else {
+        let mut h = 1;
+        while h < n {
+            g.push(h);
+            h = 3 * h + 1;
+        }
+        g.reverse()
+    }
+    let m = g.len();
+
+    for i in 0..m {
+        let new_cnt = insertion_sort(input_array, n, g[i as usize]);
+        cnt += new_cnt;
+    }
+
+    cnt
+}
+
 fn main() {
     let n: i32 = read();
 
     let mut input_array: Vec<i32> = (0..n).map(|_| read::<i32>()).collect();
 
-    println!("Hello, world!");
+    let count = shell_sort(&mut input_array, n);
+
+    for index in 0..n {
+        if index != n - 1 {
+            print!("{} ", input_array[index as usize]);
+        } else {
+            print!("{}", input_array[index as usize]);
+        }
+    }
+    println!("");
+    println!("{}", count);
 }
