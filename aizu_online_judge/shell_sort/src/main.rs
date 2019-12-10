@@ -32,7 +32,7 @@ fn insertion_sort(target_array: &mut Vec<i32>, n: i32, g: i32) -> i32 {
     cnt
 }
 
-fn shell_sort(target_array: &mut Vec<i32>, n: i32) -> i32 {
+fn shell_sort(target_array: &mut Vec<i32>, n: i32) {
     let mut cnt = 0;
 
     let mut g: Vec<i32> = vec![];
@@ -54,7 +54,15 @@ fn shell_sort(target_array: &mut Vec<i32>, n: i32) -> i32 {
         cnt += new_cnt;
     }
 
-    cnt
+    println!("{}", m);
+    for index in 0..m {
+        if index != m - 1 {
+            print!("{} ", g[index as usize]);
+        } else {
+            println!("{}", g[index as usize]);
+        }
+    }
+    println!("{}", cnt);
 }
 
 fn main() {
@@ -62,15 +70,9 @@ fn main() {
 
     let mut target_array: Vec<i32> = (0..n).map(|_| read::<i32>()).collect();
 
-    let count = shell_sort(&mut target_array, n);
+    shell_sort(&mut target_array, n);
 
     for index in 0..n {
-        if index != n - 1 {
-            print!("{} ", target_array[index as usize]);
-        } else {
-            print!("{}", target_array[index as usize]);
-        }
+        println!("{}", target_array[index as usize]);
     }
-    println!("");
-    println!("{}", count);
 }
