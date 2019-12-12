@@ -14,11 +14,12 @@ fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
-#[derive(Copy)]
+#[derive(Debug, Copy, Clone)]
 struct Process {
     name: String,
     time: i32,
 }
+
 
 impl Process {
 
@@ -33,6 +34,8 @@ impl Process {
     fn is_finish(self) -> bool {
         self.time <= 0
     }
+
+
 }
 
 struct WaitingProcessQueue {
@@ -60,7 +63,7 @@ impl WaitingProcessQueue {
                 process.forward(self.quantum);
                 self.increment_total_time(process.time);
                 if process.is_finish() {
-                    println!("{} {}", process.name, process.time);
+                    println!("{} {}", process.name.clone(), self.total_time);
                 } else {
                     self.queue.push_back(process);
                 }
@@ -71,7 +74,7 @@ impl WaitingProcessQueue {
     }
 
     fn increment_total_time(&mut self, added_time: i32) {
-        self.total_time += self.quantum
+        self.total_time += added_time
     }
 }
 
@@ -79,7 +82,7 @@ fn main() {
     let n: i32 = read();
     let q: i32 = read();
 
-    let process_queue: VecDeque<Process> = VecDeque::new();
+    let mut process_queue: VecDeque<Process> = VecDeque::new();
 
     for _ in 0..n {
         let name: String = read();
