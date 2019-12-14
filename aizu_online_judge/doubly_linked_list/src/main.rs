@@ -15,5 +15,26 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    println!("Hello, world!");
+    let n: u32 = read();
+
+    let mut linked_list = VecDeque::<i32>::new();
+
+    for _ in 0..n {
+        let command: String = read();
+        let value: i32 = read();
+
+        match command.as_ref() {
+            "insert" => linked_list.push_front(value),
+            _ => {}
+        }
+    }
+
+    let l = linked_list.len();
+    for i in 0..l {
+        if i != l - 1 {
+            print!("{} ", linked_list[i]);
+        } else {
+            println!("{} ", linked_list[i]);
+        }
+    }
 }
