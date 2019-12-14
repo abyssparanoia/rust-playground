@@ -21,16 +21,27 @@ fn main() {
 
     for _ in 0..n {
         let command: String = read();
-        let value: i32 = read();
 
         match command.as_ref() {
-            "insert" => linked_list.push_front(value),
-            "delete" => match linked_list.iter().position(|&v| v == value) {
-                Some(index) => {
-                    linked_list.remove(index).unwrap();
-                }
-                _ => {}
-            },
+            "insert" => {
+                let value: i32 = read();
+                linked_list.push_front(value);
+            }
+            "delete" => {
+                let value: i32 = read();
+                match linked_list.iter().position(|&v| v == value) {
+                    Some(index) => {
+                        linked_list.remove(index).unwrap();
+                    }
+                    _ => {}
+                };
+            }
+            "deleteFirst" => {
+                linked_list.pop_front();
+            }
+            "deleteLast" => {
+                linked_list.pop_back();
+            }
             _ => {}
         }
     }
