@@ -25,6 +25,12 @@ fn main() {
 
         match command.as_ref() {
             "insert" => linked_list.push_front(value),
+            "delete" => match linked_list.iter().position(|&v| v == value) {
+                Some(index) => {
+                    linked_list.remove(index).unwrap();
+                }
+                _ => {}
+            },
             _ => {}
         }
     }
