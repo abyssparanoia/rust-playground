@@ -51,7 +51,7 @@ fn main() {
         if i != l - 1 {
             print!("{} ", linked_list[i]);
         } else {
-            println!("{} ", linked_list[i]);
+            println!("{}", linked_list[i]);
         }
     }
 }
