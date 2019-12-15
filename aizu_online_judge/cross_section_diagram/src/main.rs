@@ -10,47 +10,13 @@ fn read_line<T: FromStr>() -> Vec<T> {
         .collect()
 }
 
-struct Diagram {
-    width: u32,
-    depth: i32,
-}
-
-const fn abs(v: i32) -> u32 {
-    [-v, v][(v >= 0) as usize] as u32
-}
-
-impl Diagram {
-    fn new() -> Diagram {
-        Diagram { width: 0, depth: 0 }
-    }
-    fn init(mut self) {
-        self.width = 0;
-        self.depth = 0;
-    }
-
-    fn foward(mut self, token: &'static str) {
-        match token {
-            "\\" => {
-                self.depth += 1;
-                self.width += 1;
-            }
-            "/" => {
-                self.depth -= 1;
-                self.width += 1;
-            }
-            _ => {}
-        }
-    }
-
-    fn is_finish(self) -> bool {
-        self.depth == 0 && self.width != 0
-    }
-
-    fn caluclate(self) -> u32 {
-        (abs(self.depth) * self.width / 2) as u32
-    }
-}
+type Area = (isize, isize);
 
 fn main() {
+    let token_list: Vec<char> = read_line();
+
+    let index_stack: Vec<i32> = vec![];
+    let area_stack: Vec<Area> = vec![];
+
     println!("Hello, world!");
 }
