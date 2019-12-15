@@ -15,6 +15,12 @@ struct Diagram {
     depth: u32,
 }
 
+impl Diagram {
+    fn new() -> Diagram {
+        Diagram { width: 0, depth: 0 }
+    }
+}
+
 fn main() {
     println!("Hello, world!");
 }
