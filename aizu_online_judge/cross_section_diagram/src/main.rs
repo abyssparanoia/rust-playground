@@ -10,6 +10,11 @@ fn read_line<T: FromStr>() -> Vec<T> {
         .collect()
 }
 
+struct Diagram {
+    width: i32,
+    depth: u32,
+}
+
 fn main() {
     println!("Hello, world!");
 }
