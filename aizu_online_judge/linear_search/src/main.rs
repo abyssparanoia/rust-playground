@@ -14,5 +14,19 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    println!("Hello, world!");
+    let n: usize = read();
+    let s_array: Vec<i32> = (0..n).map(|_| read::<i32>()).collect();
+    let q: usize = read();
+    let t_array: Vec<i32> = (0..q).map(|_| read::<i32>()).collect();
+
+    let mut cnt = 0;
+
+    for t in t_array {
+        match s_array.clone().into_iter().find(|&v| v == t) {
+            Some(_v) => cnt += 1,
+            _ => {}
+        }
+    }
+
+    println!("{}", cnt);
 }
