@@ -63,13 +63,19 @@ fn main() {
 
     println!("{}", sum);
 
-    print!("{} ", area_stack.len());
-    for i in 0..area_stack.len() {
+    let area_stack_len = area_stack.len();
+    if area_stack_len != 0 {
+        print!("{} ", area_stack_len);
+    } else {
+        print!("{}", area_stack_len);
+    }
+    for i in 0..area_stack_len {
         let area = area_stack[i];
-        if i != area_stack.len() - 1 {
+        if i != area_stack_len - 1 {
             print!("{} ", area.1);
         } else {
-            println!("{}", area.1);
+            print!("{}", area.1);
         }
     }
+    println!("");
 }
