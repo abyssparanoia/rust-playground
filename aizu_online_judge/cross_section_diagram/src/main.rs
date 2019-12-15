@@ -23,6 +23,10 @@ impl Diagram {
     fn new() -> Diagram {
         Diagram { width: 0, depth: 0 }
     }
+    fn init(mut self) {
+        self.width = 0;
+        self.depth = 0;
+    }
 
     fn foward(mut self, token: &'static str) {
         match token {
