@@ -33,6 +33,10 @@ impl Diagram {
             _ => {}
         }
     }
+
+    fn is_finish(self) -> bool {
+        self.depth == 0 && self.width != 0
+    }
 }
 
 fn main() {
