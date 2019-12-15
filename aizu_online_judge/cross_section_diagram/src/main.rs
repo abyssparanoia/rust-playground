@@ -19,6 +19,20 @@ impl Diagram {
     fn new() -> Diagram {
         Diagram { width: 0, depth: 0 }
     }
+
+    fn foward(mut self, token: &'static str) {
+        match token {
+            "\\" => {
+                self.depth += 1;
+                self.width += 1;
+            }
+            "/" => {
+                self.depth -= 1;
+                self.width -= 1;
+            }
+            _ => {}
+        }
+    }
 }
 
 fn main() {
