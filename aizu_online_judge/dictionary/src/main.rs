@@ -1,4 +1,4 @@
-use std::collections::VecDeque;
+use std::collections::HashMap;
 use std::io::*;
 use std::str::FromStr;
 
@@ -15,5 +15,20 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: usize = read();
+
+    let mut map: HashMap<String, String> = HashMap::new();
+
+    for _ in 0..n {
+        let command: String = read();
+        let value: String = read();
+
+        match command.as_ref() {
+            "insert" => {}
+            "find" => {}
+            _ => {}
+        }
+    }
+
     println!("Hello, world!");
 }
