@@ -17,18 +17,31 @@ fn read<T: FromStr>() -> T {
 fn main() {
     let n: usize = read();
 
-    let mut map: HashMap<String, String> = HashMap::new();
+    let mut map: HashMap<String, i32> = HashMap::new();
+
+    let mut ans_array: Vec<String> = vec![];
 
     for _ in 0..n {
         let command: String = read();
         let value: String = read();
 
         match command.as_ref() {
-            "insert" => {}
-            "find" => {}
+            "insert" => {
+                map.insert(value, 1);
+            }
+            "find" => match map.get(&value) {
+                Some(_v) => {
+                    ans_array.push("yes".to_string());
+                }
+                None => {
+                    ans_array.push("no".to_string());
+                }
+            },
             _ => {}
         }
     }
 
-    println!("Hello, world!");
+    for i in 0..ans_array.len() as usize {
+        println!("{}", ans_array[i]);
+    }
 }
