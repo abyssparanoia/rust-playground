@@ -34,4 +34,17 @@ fn main() {
     let k: usize = read();
 
     let w: Vec<u32> = (0..n).map(|_| read::<u32>()).collect();
+
+    let mut left: usize = 0;
+    let mut right: usize = 100000 * 10000;
+    while right - left > 1 {
+        let mid: usize = (left + right) / 2;
+        if check(w.clone(), n, k, mid as u32) {
+            right = mid;
+        } else {
+            left = mid;
+        }
+    }
+
+    println!("{}", right)
 }
