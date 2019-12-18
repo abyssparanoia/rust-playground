@@ -13,6 +13,30 @@ fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
+fn merge(mut array: Vec<u32>, left: usize, mid: usize, right: usize) {
+    let n1 = mid - left;
+    let n2 = right - mid;
+
+    let mut l_array: Vec<u32> = (0..n1).map(|idx| array[left + idx]).collect();
+    let mut r_array: Vec<u32> = (0..n2).map(|idx| array[mid + idx]).collect();
+
+    l_array[n1] = std::u32::MAX;
+    r_array[n2] = std::u32::MAX;
+
+    let mut idx_i: usize = 0;
+    let mut idx_j: usize = 0;
+
+    for k in left..right {
+        if l_array[idx_i] <= r_array[idx_j] {
+            array[k] = l_array[idx_i];
+            idx_i += 1;
+        } else {
+            array[k] = r_array[idx_j];
+            idx_j += 1;
+        }
+    }
+}
+
 fn main() {
     println!("Hello, world!");
 }
