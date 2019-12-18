@@ -13,7 +13,7 @@ fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
-fn merge(mut array: Vec<u32>, left: usize, mid: usize, right: usize) {
+fn merge(array: &mut Vec<u32>, left: usize, mid: usize, right: usize) {
     let n1 = mid - left;
     let n2 = right - mid;
 
@@ -34,6 +34,15 @@ fn merge(mut array: Vec<u32>, left: usize, mid: usize, right: usize) {
             array[k] = r_array[idx_j];
             idx_j += 1;
         }
+    }
+}
+
+fn mergeSort(array: &mut Vec<u32>, left: usize, right: usize) {
+    if left + 1 < right {
+        let mid = (left + right) / 2;
+        mergeSort(array, left, mid);
+        mergeSort(array, mid, right);
+        merge(array, left, mid, right);
     }
 }
 
