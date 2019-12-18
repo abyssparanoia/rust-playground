@@ -52,21 +52,21 @@ fn binary_search(array: Vec<i32>, key: i32) -> i32 {
 fn main() {
     let n: usize = read();
 
-    let mut a: Vec<i32> = (0..n).map(|_| read::<i32>()).collect();
+    let a: Vec<i32> = (0..n).map(|_| read::<i32>()).collect();
 
     let hash_set: HashSet<i32> = make_hash_set(a.clone());
-    // let q: usize = read();
+    let mut a_unique: Vec<i32> = hash_set.iter().map(|&v| v).collect();
+    a_unique.sort();
 
-    // for _i in 0..q {
-    //     let m: i32 = read();
-    //     let mut sum: i32 = 0;
-    //     let mut idx: usize = 0;
-    //     loop {
-    //         sum += a[idx];
+    let q: usize = read();
 
-    //         if sum <
-    //     }
-    // }
-
-    println!("Hello, world!");
+    for _i in 0..q {
+        let m: i32 = read();
+        let result = binary_search(a_unique.clone(), m);
+        if result == -1 {
+            println!("no");
+        } else {
+            println!("yes");
+        }
+    }
 }
