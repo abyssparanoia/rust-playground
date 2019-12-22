@@ -13,6 +13,18 @@ fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
+struct BIT {
+    array: Vec<u32>,
+}
+
+impl BIT {
+    fn new(size: usize) -> BIT {
+        BIT {
+            array: vec![0; size],
+        }
+    }
+}
+
 fn main() {
     println!("Hello, world!");
 }
