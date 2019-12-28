@@ -13,8 +13,19 @@ fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
-fn counting_sort(B: &mut Vec<u32>, n: usize, k: usize) {
-    let mut A = B.clone();
+fn array_display(array: Vec<u32>) {
+    let len = array.len() as usize;
+    for idx in 0..len {
+        if idx != len - 1 {
+            print!("{} ", array[idx]);
+        } else {
+            println!("{}", array[idx]);
+        }
+    }
+}
+
+fn counting_sort(A: &mut Vec<u32>, n: usize, k: usize) {
+    let mut B = A.clone();
 
     let mut C = vec![0; k];
 
@@ -30,6 +41,9 @@ fn counting_sort(B: &mut Vec<u32>, n: usize, k: usize) {
         B[C[A[j] as usize] as usize] = A[j];
         C[A[j] as usize] -= 1;
     }
+
+    array_display(C);
+    array_display(B);
 }
 
 fn main() {
