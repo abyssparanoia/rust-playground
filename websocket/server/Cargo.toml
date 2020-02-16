@@ -1,5 +1,5 @@
 [package]
-name = "websocket"
+name = "server"
 version = "0.1.0"
 authors = ["abyssparanoia <y.sugimoto.paranoia@gmail.com>"]
 edition = "2018"
