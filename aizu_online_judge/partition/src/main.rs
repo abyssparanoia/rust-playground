@@ -15,23 +15,40 @@ fn read<T: FromStr>() -> T {
 
 fn paritition(array: &mut Vec<u32>, p: usize, r: usize) -> usize {
     let x = array[r];
-    let mut i = p - 1;
+    let mut i: i32 = (p as i32) - 1;
 
     for j in p..r {
         if array[j] <= x {
             i += 1;
-            array.swap(i, j);
+            array.swap(i as usize, j);
         }
     }
-    array.swap(i + 1, r);
+    array.swap((i + 1) as usize, r);
 
-    i + 1
+    (i + 1) as usize
 }
 
 fn main() {
-    let n: u32 = read();
+    let n: usize = read();
 
     let mut array: Vec<u32> = (0..n).map(|_| read::<u32>()).collect();
 
-    println!("Hello, world!");
+    let p = paritition(&mut array, 0, n - 1);
+
+    for i in 0..n {
+        if i == 0 {
+            print!("");
+        }
+        if i == p {
+            print!("[");
+        }
+        print!("{}", array[i]);
+        if i == p {
+            print!("]");
+        }
+        if i != n - 1 {
+            print!(" ");
+        }
+    }
+    println!("");
 }
