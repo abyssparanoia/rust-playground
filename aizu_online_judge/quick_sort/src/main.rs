@@ -14,6 +14,7 @@ fn read<T: FromStr>() -> T {
 }
 
 struct Trump {
+    initilize_idx: usize,
     number: u32,
     token: String,
 }
@@ -42,5 +43,40 @@ fn quick_sort(array: &mut Vec<Trump>, p: usize, r: usize) {
 }
 
 fn main() {
-    println!("Hello, world!");
+    let n: usize = read();
+
+    let mut array: Vec<Trump> = (0..n)
+        .map(|idx| {
+            let token: String = read();
+            let number: u32 = read();
+            Trump {
+                token,
+                number,
+                initilize_idx: idx,
+            }
+        })
+        .collect();
+
+    quick_sort(&mut array, 0, n - 1);
+
+    let mut stable_flag = true;
+
+    for idx in 1..n {
+        if array[idx].number == array[idx - 1].number
+            && array[idx].initilize_idx < array[idx - 1].initilize_idx
+        {
+            stable_flag = false;
+            break;
+        }
+    }
+
+    if stable_flag {
+        println!("Stable");
+    } else {
+        println!("Not stable");
+    }
+
+    for idx in 0..n {
+        println!("{} {}", array[idx].token, array[idx].number);
+    }
 }
