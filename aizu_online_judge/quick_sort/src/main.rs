@@ -13,12 +13,17 @@ fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
-fn paritition(array: &mut Vec<u32>, p: usize, r: usize) -> usize {
-    let x = array[r];
+struct Trump {
+    number: u32,
+    token: String,
+}
+
+fn paritition(array: &mut Vec<Trump>, p: usize, r: usize) -> usize {
+    let x = array[r].number;
     let mut i: i32 = (p as i32) - 1;
 
     for j in p..r {
-        if array[j] <= x {
+        if array[j].number <= x {
             i += 1;
             array.swap(i as usize, j);
         }
