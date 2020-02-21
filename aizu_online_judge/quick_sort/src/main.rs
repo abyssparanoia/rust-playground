@@ -33,6 +33,14 @@ fn paritition(array: &mut Vec<Trump>, p: usize, r: usize) -> usize {
     (i + 1) as usize
 }
 
+fn quick_sort(array: &mut Vec<Trump>, p: usize, r: usize) {
+    if p < r {
+        let q = paritition(array, p, r);
+        quick_sort(array, p, q - 1);
+        quick_sort(array, q + 1, r);
+    }
+}
+
 fn main() {
     println!("Hello, world!");
 }
